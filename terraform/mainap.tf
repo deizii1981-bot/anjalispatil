@@ -28,14 +28,14 @@ data "aws_ami" "ubuntu_jammy" {
 
 resource "aws_key_pair" "this" {
   key_name   = "anjalispatilnet-key"
-  public_key = file("~/.ssh/id_ed25519_sanunet.pub")
+  public_key = file("~/.ssh/id_ed25519_anjalispatilnet.pub")
 }
 
 resource "aws_vpc" "this" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_support   = true
   enable_dns_hostnames = true
-  tags = { Name = "sanunet-vpc" }
+  tags = { Name = "anjalispatilnet-vpc" }
 }
 
 resource "aws_internet_gateway" "this" {
