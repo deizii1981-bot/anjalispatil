@@ -27,7 +27,7 @@ data "aws_ami" "ubuntu_jammy" {
 }
 
 resource "aws_key_pair" "this" {
-  key_name   = "sanunet-key"
+  key_name   = "anjalispatilnet-key"
   public_key = file("~/.ssh/id_ed25519_sanunet.pub")
 }
 
@@ -40,7 +40,7 @@ resource "aws_vpc" "this" {
 
 resource "aws_internet_gateway" "this" {
   vpc_id = aws_vpc.this.id
-  tags = { Name = "sanunet-igw" }
+  tags = { Name = "anjalispatilnet-igw" }
 }
 
 resource "aws_subnet" "public" {
@@ -48,7 +48,7 @@ resource "aws_subnet" "public" {
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "eu-west-1a"
   map_public_ip_on_launch = true
-  tags = { Name = "sanunet-subnet-public" }
+  tags = { Name = "anjalispatilnet-subnet-public" }
 }
 
 resource "aws_route_table" "public" {
@@ -57,7 +57,7 @@ resource "aws_route_table" "public" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.this.id
   }
-  tags = { Name = "sanunet-route-table" }
+  tags = { Name = "anjalispatilnet-route-table" }
 }
 
 resource "aws_route_table_association" "public_assoc" {
@@ -66,7 +66,7 @@ resource "aws_route_table_association" "public_assoc" {
 }
 
 resource "aws_security_group" "web" {
-  name        = "sanunet-sg"
+  name        = "anjalispatilnet-sg"
   description = "Allow SSH and HTTP"
   vpc_id      = aws_vpc.this.id
 
@@ -93,7 +93,7 @@ resource "aws_security_group" "web" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = { Name = "sanunet-sg" }
+  tags = { Name = "anjalispatilnet-sg" }
 }
 
 resource "aws_instance" "web" {
@@ -102,7 +102,7 @@ resource "aws_instance" "web" {
   key_name               = aws_key_pair.this.key_name
   subnet_id              = aws_subnet.public.id
   vpc_security_group_ids = [aws_security_group.web.id]
-  tags = { Name = "sanunet-web-server" }
+  tags = { Name = "anjalispatilnet-web-server" }
 
   user_data = <<-EOF
     #!/bin/bash
